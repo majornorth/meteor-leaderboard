@@ -11,7 +11,10 @@
 		<ul>
 			<li class="player {{selectedClass}}">{{name}}: {{score}}</li>
 		</ul>
-
 	{{/each}}
-	{{otherHelperFunction}}
+    {{#if showSelectedPlayer}}
+    <p><strong>Selected Player:</strong> {{showSelectedPlayer.name}}</p>
+	<input type="button" class="increment" value="Give 5 Points">
+    {{/if}}
+    <input type="button" class="decrement" value="Take 5 Points">
 </template>
