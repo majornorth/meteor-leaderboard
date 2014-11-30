@@ -35,7 +35,10 @@ if(Meteor.isClient){
 		},
 		'click .remove': function(){
 			var selectedPlayer = Session.get('selectedPlayer');
-			PlayersList.remove(selectedPlayer);
+			var selectedPlayerName = PlayersList.findOne(selectedPlayer).name;
+			if (confirm('Are you sure you want to remove ' + selectedPlayerName + ' from the leaderboard?')) {
+				PlayersList.remove(selectedPlayer);
+			};
 		}
 	});
 
@@ -43,12 +46,15 @@ if(Meteor.isClient){
 		'submit form': function(event){
 			event.preventDefault();
 			var playerNameVar = event.target.playerName.value;
-			console.log(playerNameVar);
+			var playerScoreVar = event.target.playerScore.value;
 			PlayersList.insert({
 				name: playerNameVar,
-				score: 0
+				score: playerScoreVar
 			});
 			event.target.playerName.value = '';
+			event.target.playerScore.value = '';
+			event.target.playerName.blur();
+			event.target.playerScore.blur();
 		}
 	});
 }
