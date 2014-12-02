@@ -49,14 +49,15 @@ if(Meteor.isClient){
 			var playerNameVar = event.target.playerName.value;
 			var playerScoreVar = event.target.playerScore.value;
 			console.log(!isNaN(playerScoreVar));
-			if (!isNaN(playerScoreVar)) {
-				alert('Please enter a score for your player');
-			} else {
+			console.log(playerScoreVar);
+			if (playerScoreVar !== '') {
 				Meteor.call('insertPlayerData', playerNameVar, playerScoreVar);
 				event.target.playerName.value = '';
 				event.target.playerScore.value = '';
 				event.target.playerName.blur();
 				event.target.playerScore.blur();
+			} else {
+				alert('Please enter a score for your player');
 			}
 
 		}
@@ -85,10 +86,5 @@ if(Meteor.isServer){
 		'modifyPlayerScore': function(selectedPlayer, scoreValue){
 			PlayersList.update(selectedPlayer, {$inc: {score: scoreValue} });
 		}
-		// 'modifyPlayerScore': function(selectedPlayer, scoreValue){
-		// 	PlayersList.update(selectedPlayer, {
-		// 		$inc: {score: scoreValue}
-		// 	});
-		// }
 	});
 }
